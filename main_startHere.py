@@ -1,6 +1,20 @@
 import cv2
 import numpy as np
 
+def nothing(x):
+    pass
+
+def initializeTrackbars(intialTracbacVal=0):
+    cv2.namedWindow("Trackbars")
+    cv2.resizeWindow("Trackbars",360, 240)
+    cv2.createTrackbar("Threshold1","Trackbars",intialTracbacVal,255,nothing)
+    cv2.createTrackbar("Threshold2","Trackbars", intialTracbacVal,255,nothing)
+
+def valTrackbars():
+    Threshold1 = cv2.getTrackbarPos("Threshold1","Trackbars")
+    Threshold2 = cv2.getTrackbarPos("Threshold2","Trackbars")
+    src= Threshold1,Threshold2
+    return src
 
 ########################################################################
 webCamFeed = True  # set to false if no webcam available
@@ -12,6 +26,7 @@ heightImg = 480
 widthImg = 640
 ########################################################################
 
+initializeTrackbars()
 count = 0
 
 while True:
@@ -31,14 +46,14 @@ while True:
     imgCanny = cv2.Canny(imgBlur, 150, 200)  # APPLY CANNY BLUR
     kernel = np.ones((5, 5))
     imgDial = cv2.dilate(imgCanny, kernel, iterations=2)  # APPLY DILATION
-    # imgThreshold = cv2.erode(imgDial, kernel, iterations=1)  # APPLY EROSION
+    imgThreshold = cv2.erode(imgDial, kernel, iterations=1)  # APPLY EROSION
 
     cv2.imshow("1. Original", img)
     cv2.imshow("2. Grayscale", imgGray)
     cv2.imshow("3. Blur", imgBlur)
     cv2.imshow("4. Canny", imgCanny)
     cv2.imshow("5. Dilate", imgDial)
-    #cv2.imshow("6. Treshold", imgThreshold)
+    cv2.imshow("6. Treshold", imgThreshold)
     #cv2.imshow("7. imgContours", imgContours)
 
     # Press x  on keyboard to  exit
