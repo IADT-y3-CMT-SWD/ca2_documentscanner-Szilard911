@@ -50,7 +50,7 @@ while True:
     if cv2.waitKey(1) & 0xFF == ord('s'):
         print("saving")
         # save image to folder using cv2.imwrite()
-        cv2.imwrite("Scanned/myImage"+str(count)+".jpg", imgCanny)
+        cv2.imwrite("Scanned/myImage"+str(count)+".jpg", imgGray)
         cv2.waitKey(300)
         count += 1
 # When everything done, release
