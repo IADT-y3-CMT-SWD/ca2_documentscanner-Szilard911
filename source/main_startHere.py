@@ -18,8 +18,8 @@ def valTrackbars():
 
 
 ########################################################################
-webCamFeed = False  # set to false if no webcam available
-pathImage = "source\\Images\\image004.png"
+webCamFeed = True  # set to false if no webcam available
+pathImage = "Images\\image004.jpg"
 # main webcam -> 0
 cap = cv2.VideoCapture(0)
 cap.set(10, 160)
@@ -75,7 +75,7 @@ while True:
     if cv2.waitKey(1) & 0xFF == ord('s'):
         print("saving")
         # save image to folder using cv2.imwrite()
-        cv2.imwrite("source/Scanned/myImage"+str(count)+".jpg", imgGray)
+        cv2.imwrite("Scanned/myImage"+str(count)+".jpg", imgGray)
         cv2.waitKey(300)
         count += 1
 # When everything done, release
