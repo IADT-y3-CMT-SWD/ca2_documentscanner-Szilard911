@@ -16,6 +16,7 @@ def valTrackbars():
     src= Threshold1,Threshold2
     return src
 
+
 ########################################################################
 webCamFeed = True  # set to false if no webcam available
 pathImage = "Images\\image004.jpg"
@@ -24,6 +25,7 @@ cap = cv2.VideoCapture(0)
 cap.set(10, 160)
 heightImg = 480
 widthImg = 640
+
 ########################################################################
 
 initializeTrackbars(125)
@@ -45,6 +47,7 @@ while True:
     thres = valTrackbars()  # GET TRACK BAR VALUES FOR THRESHOLDS
     imgCanny = cv2.Canny(imgBlur, thres[0], thres[1])  # APPLY CANNY BLUR
     kernel = np.ones((5, 5))
+    imgEroded = cv2.erode (imgDial,kernel,iterations=2)
     imgDial = cv2.dilate(imgCanny, kernel, iterations=2)  # APPLY DILATION
     imgThreshold = cv2.erode(imgDial, kernel, iterations=1)  # APPLY EROSION
     imgContours =img.copy()
@@ -56,6 +59,11 @@ while True:
     cv2.imshow("5. Dilate", imgDial)
     cv2.imshow("6. Treshold", imgThreshold)
     cv2.imshow("7. imgContours", imgContours)
+
+    contours,hierarchy =cv2.findContours(imgThreshold,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+    cv2.drawContours(imgContours,contours,-1,(0,255,0),10)
+
+
 
     # Press x  on keyboard to  exit
     # Close and break the loop after pressing "x" key
